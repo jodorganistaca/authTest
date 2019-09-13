@@ -2,7 +2,7 @@
   <div class="container">
       <div class="card">
           <div class="card-header">
-              Register
+              Login
           </div>
           <div class="card-body">
             <div class="col-md-6 offset-md-3">
@@ -14,11 +14,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" class="form-control" placeholder="Name..." v-model="name">
-                    </div>
-
+                    
                     <div class="form-group">
                         <label>UserName</label>
                         <input type="text" class="form-control" placeholder="Username..." v-model="userName">
@@ -29,12 +25,8 @@
                         <input type="text" class="form-control" placeholder="Password..." v-model="password">
                     </div>
 
-                    <div class="form-group">
-                        <label>Confirm Password</label>
-                        <input type="text" class="form-control" placeholder="Confirm Password..." v-model="confirmPassword">
-                    </div>
 
-                    <button class="btn btn-succes">Register</button>
+                    <button class="btn btn-succes">Login</button>
                 </form>
             </div>               
           </div>
@@ -46,14 +38,12 @@
 
 <script>
 export default {
-    name: 'register',
+    name: 'login',
     props: ['app'],
     data(){
         return {
-            name: '',
             userName: '',
             password: '',
-            confirmPassword: '', 
             errors: []
         }
     },
@@ -61,11 +51,7 @@ export default {
         onSubmit(){
             this.errors = [];
 
-            if(!this.name){
-                this.errors.push('Name is required.')
-            }
-
-           if(!this.userName){
+            if(!this.userName){
                this.errors.push('Username is required');
            }
 
@@ -73,22 +59,14 @@ export default {
                this.errors.push('Password is required');
            }
 
-           if(!this.confirmPassword){
-               this.errors.push('Pasword confirmation is required.');
-           }
-
-           if(this.password !== this.confirmPassword){
-               this.errors.push('Passwords do no match.');
-           }
            
            if(!this.errors.length){
                const data = {
-                   name: this.name,
                    username: this.username,
                    password: this.password
                }
 
-               this.app.req.post('authTest/register', data).then(response => {
+               this.app.req.post('authTest/login', data).then(response => {
                    this.app.user = response.data;
                    this.$router.push("/");
                }).catch(error => {
